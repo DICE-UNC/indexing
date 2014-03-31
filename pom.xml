@@ -58,6 +58,11 @@
 	</build>
 	<dependencies>
 		<dependency>
+			<groupId>org.irods.jargon</groupId>
+			<artifactId>jargon-core</artifactId>
+			<version>3.3.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<version>2.4</version>
@@ -88,9 +93,43 @@
 			<version>4.11</version>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-commons-csv</artifactId>
+			<version>3.5.0</version>
+		</dependency>
+		<dependency>
 			<groupId>erilex</groupId>
 			<artifactId>erilex</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+			<type>pom.lastUpdated</type>
 		</dependency>
 	</dependencies>
+	<repositories>
+		<repository>
+			<id>dice.repository snapshots</id>
+			<name>dice.repository.snapshots</name>
+			<url>https://raw.github.com/DICE-UNC/DICE-Maven/master/snapshots</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>dice.repository</id>
+			<name>dice.repository</name>
+			<url>https://raw.github.com/DICE-UNC/DICE-Maven/master/releases</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</snapshots>
+		</repository>
+	</repositories>
 </project>
