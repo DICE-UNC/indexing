@@ -17,6 +17,7 @@ public interface PolymorphicDataEntityMixin {
 		    @Type(value = Collection.class, name = "Collection"),
 		    @Type(value = Message.class, name = "Message"),
 		    @Type(value = Messages.class, name = "Messages"),
+		    @Type(value = User.class, name = "User"),
 		    @Type(value = Access.class, name = "Access"),
 		    @Type(value = Session.class, name = "Session")})  
 	java.util.List<DataEntity> getHasPart();
