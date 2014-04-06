@@ -3,11 +3,7 @@ package databook.persistence.rule;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.annotation.JsonSubTypes.*;
 
-import databook.persistence.rule.rdf.ruleset.Collection;
-import databook.persistence.rule.rdf.ruleset.DataEntity;
-import databook.persistence.rule.rdf.ruleset.DataObject;
-import databook.persistence.rule.rdf.ruleset.Message;
-import databook.persistence.rule.rdf.ruleset.Messages;
+import databook.persistence.rule.rdf.ruleset.*;
 import static databook.utils.ModelUtils.*;
 	  
 public interface PolymorphicDataEntityMixin {
@@ -20,6 +16,8 @@ public interface PolymorphicDataEntityMixin {
 		    @Type(value = DataObject.class, name = "DataObject"),  
 		    @Type(value = Collection.class, name = "Collection"),
 		    @Type(value = Message.class, name = "Message"),
-		    @Type(value = Messages.class, name = "Messages")})  
+		    @Type(value = Messages.class, name = "Messages"),
+		    @Type(value = Access.class, name = "Access"),
+		    @Type(value = Session.class, name = "Session")})  
 	java.util.List<DataEntity> getHasPart();
 }

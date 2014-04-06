@@ -13,12 +13,13 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import databook.listener.service.IndexingService;
+import databook.listener.service.MessagingService;
 import databook.persistence.rule.PolymorphicDataEntityMixin;
 import databook.persistence.rule.rdf.ruleset.DataEntity;
 import databook.persistence.rule.rdf.ruleset.Message;
 import databook.persistence.rule.rdf.ruleset.Messages;
 
-public class ModelUpdater implements MessageHandler, IndexingService {
+public class ModelUpdater implements MessagingService, IndexingService {
 	// private final ModelUpdateListener modelUpdateListener;
 
 	static final Log log = LogFactory.getLog(ModelUpdater.class);
@@ -77,6 +78,8 @@ public class ModelUpdater implements MessageHandler, IndexingService {
 
 	@Override
 	public void handle(String message) {
+		System.out.println("Executing update:\n===start===\n" + message
+				+ "\n===end===\n");
 		log.info("Received AMQP message'" + message + "'");
 		try {
 			update(message);
