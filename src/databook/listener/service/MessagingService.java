@@ -1,6 +1,6 @@
-package databook.listener;
+package databook.listener.service;
 
-public interface MessageHandler {
+public interface MessagingService {
 
 	void handle(String message);
 
