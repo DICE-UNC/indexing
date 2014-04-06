@@ -15,8 +15,6 @@ public interface PolymorphicDataEntityMixin {
 	@JsonSubTypes({  
 		    @Type(value = DataObject.class, name = "DataObject"),  
 		    @Type(value = Collection.class, name = "Collection"),
-		    @Type(value = Access.class, name = "Access"),
-		    @Type(value = Session.class, name = "Session"),
 		    @Type(value = Message.class, name = "Message"),
 		    @Type(value = Messages.class, name = "Messages"),
 		    @Type(value = User.class, name = "User"),
