@@ -157,16 +157,16 @@ For non-array properties:
 * create(v): Set the value of a previous undefined property
 * delete(v): Reset the value of a property, making it undefined
 * modify(v): Change the value of a property, if the new value is null, then the property becomes undefined
-* union(v): If the property is undefined, then set it to v.
-* diff(v): If the property is defined and equal to v, then reset the property, making it undefined.
+* union(v): If the property is undefined, then set it to v
+* diff(v): If the property is defined and equal to v, then reset the property, making it undefined
 
 For array properties:
-We do not distinguish between undefined and empty array.
-* create(v): Set the value of a previous undefined property.
-* delete(v): Reset the value of a property, making it undefined.
-* modify(v): Changes the value of a property, if the new value is null, then the property becomes undefined.
-* union(v): Set the property to the union of its current value and v.
-* diff(v): Set the property to the difference of its current value and v.
+(We do not distinguish between undefined and empty array)
+* create(v): Set the value of a previous undefined property
+* delete(v): Reset the value of a property, making it undefined
+* modify(v): Changes the value of a property, if the new value is null, then the property becomes undefined
+* union(v): Set the property to the union of its current value and v
+* diff(v): Set the property to the difference of its current value and v
 
 The defined rules can be registered to a RuleSet object.
 
