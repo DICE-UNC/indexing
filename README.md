@@ -13,11 +13,9 @@ and
 
     databook.listener.service.IndexingService
     
-The former is used to interface with messaging services such as AMQP 0.9, AMQP 1.0, etc.
-This can be done by defining a Camel route.
+The former is used to interface with messaging services such as AMQP 0.9, AMQP 1.0, etc. This can be done by defining a Camel route.
 
-The latter is used to interface with indexers. IndexingService provides methods for an indexer to register and unregister.
-When an indexer is registered to the IndexingService, the IndexingService will relay all messages in the form of POJO that it receive to the indexer. The indexer also acquires a reference to a scheduler automatically which allows the indexer to submit time-consuming tasks to be scheduled. Currently, the supported tasks are those which require access to the underlying data grid. Each task is composed of an object indicating which data object it needs to access and a continuation object which will be called by the scheduler when the data object and system resources becomes available. A simple scheduler based on a thread pool model is included. More complex schedulers can be implemented by implementing the 
+The latter is used to interface with indexers. IndexingService provides methods for an indexer to register and unregister. When an indexer is registered to the IndexingService, the IndexingService will relay all messages in the form of POJO that it receive to the indexer. The indexer also acquires a reference to a scheduler automatically which allows the indexer to submit time-consuming tasks to be scheduled. Currently, the supported tasks are those which require access to the underlying data grid. Each task is composed of an object indicating which data object it needs to access and a continuation object which will be called by the scheduler when the data object and system resources becomes available. A simple scheduler based on a thread pool model is included. More complex schedulers can be implemented by implementing the 
 
     databook.listener.Scheduler
     
@@ -42,7 +40,13 @@ Installation
 Message Format
 --------
 
-The message format is defined in JSON Schema. Look for the schema directory in the source tree for the schemas. The jsonschema2pojo plugin is used in the build process to generate Java classes corresponding to the schemas. Jackson is used to translate between JSON messages and Java objects.
+The message format is defined in JSON Schema. Look for the schema directory in the source tree for the schemas. The jsonschema2pojo plugin is used in the build process to generate Java classes corresponding to the schemas. Jackson is used to translate between JSON messages and Java objects. Indexers do not need to parse JSON, the messages are passed into the indexer as Java objects, and fields of JSON can be accessed from fields of the Java objects.
+
+Configure ServiceMix with AMQP routing
+--------
+
+Advanced Topics
+========
 
 Composing JSON Message using the Java DSL
 --------
@@ -67,17 +71,15 @@ and
 and
 
     .object()
-        .key("key1").object()
-            .key("key11").array()
-                .object("elem1")
-                    .key("key1").value("value1")
-                .end()
-                .object("elem2")
-                    .key("key2").value("value2")
-                .end()
-                .object("elem3")
-                    .key("key3").value("value3")
-                .end()
+        .key("key1").array()
+            .object("elem1")
+                .key("key1").value("key1")
+            .end()
+            .object("elem2")
+                .key("key2").value("key2")
+            .end()
+            .object("elem3")
+                .key("key3").value("key3")
             .end()
         .end()
         .key("key2").value("value2")
@@ -86,6 +88,42 @@ and
 
 Objects and arrays can be nested arbitrarily.
 
-Configure ServiceMix with AMQP routing
+
+Rule-based Mapping of Java Objects to indexes
 --------
+
+Some indexers, such as triple store or graph database based indexers, have to serialize Java objects into textual representation in a specific format. This is supported by Rule-base mapping in the indexing framework.
+
+For example, suppose we have a JSON object
+
+    {
+        "type": "DataObject"
+        "label": "DataObject1"
+        "title": "DataObject2"
+    }
+    
+But we want to index the "label" field and the "title" field differently, then we can define two rules. The rules match fields in a similar way Java resolves ad hoc polymorphism. This is possible because in the JSON schemas subtype hierachies are defined.
+
+The rules are defined by implementing the ObjectPropertyRule interface. There are five methods to implement:
+
+    create, delete, modify, union, diff
+    
+There semantics are as following:
+For non-array properties:
+* create: Set the value of a previous undefined property
+* delete: Reset the value of a property, making it undefined
+* modify: Change the value of a property, if the new value is null, then the property becomes undefined
+* union(v): If the property is undefined, then set it to v.
+* diff(v): If the property is defined and equal to v, then reset the property, making it undefined.
+
+For array properties:
+We do not distinguish between undefined and empty array.
+* create: Set the value of a previous undefined property
+* delete: Reset the value of a property, making it undefined
+* modify: Changes the value of a property, if the new value is null, then the property becomes undefined
+* union(v): Set the property to the union of its current value and v.
+* diff(v): Set the property to the different of its current value and v.
+
+The defined rules can be registered to a RuleSet object.
+
 
