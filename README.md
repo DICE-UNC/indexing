@@ -54,7 +54,11 @@ Indexers
 
 ### ElasticSearch ###
 
+The ElasticSearch indexer comes in a seperate OSGI bundle.
+
 ### VIVO ###
+
+The VIVO indexer comes in a seperate OSGI bundle.
 
 Advanced Topics
 ========
