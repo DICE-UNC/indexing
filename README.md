@@ -154,17 +154,17 @@ The rules are defined by implementing the ObjectPropertyRule interface. There ar
     
 There semantics are as following:
 For non-array properties:
-* create: Set the value of a previous undefined property
-* delete: Reset the value of a property, making it undefined
-* modify: Change the value of a property, if the new value is null, then the property becomes undefined
+* create(v): Set the value of a previous undefined property
+* delete(v): Reset the value of a property, making it undefined
+* modify(v): Change the value of a property, if the new value is null, then the property becomes undefined
 * union(v): If the property is undefined, then set it to v.
 * diff(v): If the property is defined and equal to v, then reset the property, making it undefined.
 
 For array properties:
 We do not distinguish between undefined and empty array.
-* create: Set the value of a previous undefined property
-* delete: Reset the value of a property, making it undefined
-* modify: Changes the value of a property, if the new value is null, then the property becomes undefined
+* create(v): Set the value of a previous undefined property
+* delete(v): Reset the value of a property, making it undefined
+* modify(v): Changes the value of a property, if the new value is null, then the property becomes undefined
 * union(v): Set the property to the union of its current value and v.
 * diff(v): Set the property to the difference of its current value and v.
 
