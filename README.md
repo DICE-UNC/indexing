@@ -1,4 +1,4 @@
-indexing
+Indexing Framework
 ========
 
 An indexing framework for iRODS based middleware
@@ -15,7 +15,7 @@ and
     
 The former is used to interface with messaging services such as AMQP 0.9, AMQP 1.0, etc. This can be done by defining a Camel route.
 
-The latter is used to interface with indexers. IndexingService provides methods for an indexer to register and unregister. When an indexer is registered to the IndexingService, the IndexingService will relay all messages in the form of POJO that it receive to the indexer. The indexer also acquires a reference to a scheduler automatically which allows the indexer to submit time-consuming tasks to be scheduled. Currently, the supported tasks are those which require access to the underlying data grid. Each task is composed of an object indicating which data object it needs to access and a continuation object which will be called by the scheduler when the data object and system resources becomes available. A simple scheduler based on a thread pool model is included. More complex schedulers can be implemented by implementing the 
+The latter is used to interface with indexers. IndexingService provides methods for an indexer to register and unregister. When an indexer is registered to the IndexingService, the IndexingService will relay all messages that it receives to the indexer in the form of POJO. The indexer also acquires a reference to a scheduler automatically which allows the indexer to submit time-consuming tasks to be scheduled. Currently, the supported tasks are those which require access to the underlying data grid. Each task is composed of an object indicating which data object it needs to access and a continuation object which will be called by the scheduler when the data object and system resources become available. A simple scheduler based on a thread pool model is included. More complex schedulers can be implemented by implementing the 
 
     databook.listener.Scheduler
     
@@ -40,15 +40,26 @@ Installation
 Message Format
 --------
 
-The message format is defined in JSON Schema. Look for the schema directory in the source tree for the schemas. The jsonschema2pojo plugin is used in the build process to generate Java classes corresponding to the schemas. Jackson is used to translate between JSON messages and Java objects. Indexers do not need to parse JSON, the messages are passed into the indexer as Java objects, and fields of JSON can be accessed from fields of the Java objects.
+The message format is defined in JSON Schema. Look for the schema directory in the source tree for the schemas. The jsonschema2pojo plugin is used in the build process to generate Java classes corresponding to the schemas. Jackson is used to translate between JSON messages and Java objects. Indexers do not need to parse JSON, the messages are passed into indexers as Java objects, and fields of JSON can be accessed from fields of the Java objects.
 
-Configure ServiceMix with AMQP routing
+Configuring ServiceMix with AMQP Routing
 --------
+
+Configuring iRODS
+--------
+Enable the databook.re rule base
+
+Indexers
+--------
+
+### ElasticSearch ###
+
+### VIVO ###
 
 Advanced Topics
 ========
 
-Composing JSON Message using the Java DSL
+Composing JSON Messages Using the Java DSL
 --------
 The Java DSL for composing JSON Message is generated from an EriLex specification. This DSL allows very flexible composition of JSON Messages against the schemas. Some examples:
 
@@ -89,7 +100,7 @@ and
 Objects and arrays can be nested arbitrarily.
 
 
-Rule-based Mapping of Java Objects to indexes
+Rule-based Mapping of Java Objects to Indexes
 --------
 
 Some indexers, such as triple store or graph database based indexers, have to serialize Java objects into textual representation in a specific format. This is supported by Rule-base mapping in the indexing framework.
