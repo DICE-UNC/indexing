@@ -161,7 +161,9 @@ For non-array properties:
 * diff(v): If the property is defined and equal to v, then reset the property, making it undefined
 
 For array properties:
-(We do not distinguish between undefined and empty array)
+
+We do not distinguish between undefined and empty array.
+
 * create(v): Set the value of a previous undefined property
 * delete(v): Reset the value of a property, making it undefined
 * modify(v): Changes the value of a property, if the new value is null, then the property becomes undefined
