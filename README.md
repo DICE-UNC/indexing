@@ -152,7 +152,7 @@ The rules are defined by implementing the ObjectPropertyRule interface. There ar
 
     create, delete, modify, union, diff
     
-There semantics are as following:
+Their semantics are as follows:
 For non-array properties:
 * create(v): Set the value of a previous undefined property
 * delete(v): Reset the value of a property, making it undefined
