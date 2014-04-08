@@ -137,7 +137,7 @@ We do not distinguish between undefined and empty array.
 * delete: Reset the value of a property, making it undefined
 * modify: Changes the value of a property, if the new value is null, then the property becomes undefined
 * union(v): Set the property to the union of its current value and v.
-* diff(v): Set the property to the different of its current value and v.
+* diff(v): Set the property to the difference of its current value and v.
 
 The defined rules can be registered to a RuleSet object.
 
