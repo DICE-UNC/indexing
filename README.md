@@ -47,7 +47,36 @@ Configuring ServiceMix with AMQP Routing
 
 Configuring iRODS
 --------
-Enable the databook.re rule base
+Enable the databook.re rule base. In iRODS, edit server/config/server.config. Add "databook" before "core".
+
+This works for the default install where the default rules are empty.
+
+If there are used defined PEP rules in "core", then they will be overriden by the databook PEP rules. In this case the databook rules needs to be merged with the "core" rule.
+
+First, rename pep rules. For example, rename
+
+    acPostProcForPut
+    
+to
+
+    postProcForPut
+    
+This will prevent databook rules from overriding PEP rules defined in core.
+
+Then, add call to the databook rules from used defined PEP rules. For example, if you have a rule
+
+    acPostProcForPut {
+        ...
+    }
+    
+then add call to data book rules
+
+    acPostProcForPut {
+        ...
+        postProcForPut
+    }
+    
+    
 
 Indexers
 --------
