@@ -74,7 +74,7 @@ The hasPart property may have any number of objects. The first five operation ar
 Configuring ServiceMix with Message Routing
 --------
 
-The indexing framework doesnot require a specific messaging protocol. It can be configured using a Apache Camel route.
+The indexing framework does not require a specific messaging protocol. It can be configured using a Apache Camel route.
 
 ### AMQP 1.0 ###
 
