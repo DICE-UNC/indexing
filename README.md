@@ -73,7 +73,9 @@ if o0.p == null and o1.p != null then modify whatever value p had to o1.p;
 
 if o0.p != null and o1.p == null then delete whatever value o0.p had; 
 
-if o0.p != null and o1.p != null then modify whatever value o0.p had to o1.p. The intuition is that o0 provides uri for and act an indicator object for deletion.
+if o0.p != null and o1.p != null then modify whatever value o0.p had to o1.p. 
+
+The intuition is that o0 provides uri for the object to be modified and act as an indicator object for deletion of properties.
 
 * union(o0, o1): similar to modify, o0 provides uri. For each non array property p, if o1.p != null and the value p had was empty then set value of p to o1.p. For each array property p, set the value of p to the value it had union o1.p.
 * diff(o0, o1): similar to modify, o0 provides uri. For each non array property p, if o1.p != null and the value p had equals o1.p then set value of p to empty. For each array property p, set the value of p to the value it had diff o1.p.
