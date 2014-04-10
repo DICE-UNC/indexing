@@ -42,6 +42,35 @@ Message Format
 
 The message format is defined in JSON Schema. Look for the schema directory in the source tree for the schemas. The jsonschema2pojo plugin is used in the build process to generate Java classes corresponding to the schemas. Jackson is used to translate between JSON messages and Java objects. Indexers do not need to parse JSON, the messages are passed into indexers as Java objects, and fields of JSON can be accessed from fields of the Java objects.
 
+All messages have the follow format:
+
+    {
+        messages: [ ... ]
+    }
+    
+And it is mapped to objects of type Messages in Java. The Indexer interface provides a "messages" method which take in a Messages object. This is the method called on each indexer by the indexing framework for each incoming set of messages.
+
+Each message has the following format
+
+    {
+        operation: ...,
+        hasPart: [ ... ]
+    }
+
+The operation property may have the one of the following:
+
+    create, delete, modify, union, diff, retrieve
+    
+The hasPart property may have any number of objects. The first five operation are used by the incoming messages from the indexing framework. The last one is used by indexer for sending messages to the Scheduler. Their semantics are as follows:
+
+* create(o): create an object.
+* delete(o): delete an object.
+* modify(o0, o1): modify an object identified by o0.uri from o0 by o1. For each property p, if o0.p == null and o1.p == null then do nothing; if o0.p == null and o1.p != null then modify whatever value p had to o1.p; if o0.p != null and o1.p == null then delete whatever value o0.p had; if o0.p != null and o1.p != null then modify whatever value o0.p had to o1.p. The intuition is that o0 provides uri for and act an indicator object for deletion.
+* union(o0, o1): similar to modify, o0 provides uri. For each non array property p, if o1.p != null and the value p had was empty then set value of p to o1.p. For each array property p, set the value of p to the value it had union o1.p.
+* diff(o0, o1): similar to modify, o0 provides uri. For each non array property p, if o1.p != null and the value p had equals o1.p then set value of p to empty. For each array property p, set the value of p to the value it had diff o1.p.
+* retrieve: retrieve the objects into a cache resource for indexing.
+
+
 Configuring ServiceMix with AMQP Routing
 --------
 
