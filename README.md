@@ -71,8 +71,12 @@ The hasPart property may have any number of objects. The first five operation ar
 * retrieve: retrieve the objects into a cache resource for indexing.
 
 
-Configuring ServiceMix with AMQP Routing
+Configuring ServiceMix with Message Routing
 --------
+
+The indexing framework doesnot require a specific messaging protocol. It can be configured using a Apache Camel route.
+
+### AMQP 1.0 ###
 
 Configuring iRODS
 --------
@@ -80,7 +84,7 @@ Enable the databook.re rule base. In iRODS, edit server/config/server.config.
 
 Add "databook" the list of rule sets.
 
-To connect the rules with PEPs, there are two options: 
+To connect the rules with PEPs, there are two options:
 
 (1) If there are no user defined rules in core.re, the default PEP rules can be used. To use the default PEP rules, simplely add "databook_pep" before "core". This works for default installations where the default rules are empty. If there are user defined PEP rules in "core", then they will be overriden by the databook PEP rules. In this case the databook.re rules need to be added to user defined PEP rules.
 
