@@ -97,7 +97,9 @@ to
     postProcForPut
     
 
-Add call to the databook rules from used defined PEP rules. For example, if you have a rule
+### Add call to the databook rules from used defined PEP rules ### 
+
+For example, if you have a rule
 
     acPostProcForPut {
         ...
