@@ -24,6 +24,7 @@ public class ModelUpdater implements MessagingService, IndexingService {
 
 	static final Log log = LogFactory.getLog(ModelUpdater.class);
 	private List<Indexer> indexers = new ArrayList<Indexer>();
+	private Scheduler s = new SimpleScheduler();
 
 	public ModelUpdater() {
 	}
@@ -31,9 +32,11 @@ public class ModelUpdater implements MessagingService, IndexingService {
 	public void regIndexer(Indexer i) {
 		if (!indexers.contains(i))
 			indexers.add(i);
+		i.setScheduler(s );
 	}
 
 	public void unregIndexer(Indexer i) {
+		i.setScheduler(null);
 		indexers.remove(i);
 	}
 
