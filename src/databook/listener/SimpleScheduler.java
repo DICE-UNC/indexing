@@ -76,6 +76,28 @@ public class SimpleScheduler implements Scheduler {
 
 							}
 						}
+					} else if (m.getOperation().equals("accessObject")) {
+						for (DataEntity obj : objs) {
+							if (obj instanceof DataObject) {
+								String path = obj.getLabel();
+								if (path != null) {
+									org.irods.jargon.core.pub.DataObjectAO dao = irodsFs.getIRODSAccessObjectFactory().getDataObjectAO(irodsAccount);
+
+									j.success.call(dao);
+								} else {
+									throw new RuntimeException(
+											"No path provided for data object");
+
+								}
+							} else {
+								throw new RuntimeException(
+										"Unsupported data entity type "
+												+ obj.getClass());
+
+							}
+						}
+						
+						
 					} else {
 						throw new RuntimeException("Unsupported operation "
 								+ m.getOperation());

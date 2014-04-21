@@ -67,7 +67,7 @@
 		              <Bundle-Name>${project.artifactId}</Bundle-Name>
 		              <Bundle-Version>${project.version}</Bundle-Version>
 		              <Private-Package>databook.*</Private-Package>
-		              <Export-Package>databook.*,com.fasterxml.jackson.*</Export-Package>
+		              <Export-Package>databook.*,com.fasterxml.jackson.*,org.irods.jargon.*</Export-Package>
 		              <Bundle-Activator>databook.Activator</Bundle-Activator>
 		              <Import-Package>
 		                  org.osgi.framework,*;resolution:=optional
