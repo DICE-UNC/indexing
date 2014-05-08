@@ -23,7 +23,7 @@ public class IrodsConfig {
 		try {
 			return Integer.parseInt(RESOURCE_BUNDLE.getString(key)) ;
 		} catch (MissingResourceException e) {
-			return 0;
+			return -1;
 		}
 	}
 }
