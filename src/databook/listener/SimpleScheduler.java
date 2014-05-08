@@ -17,6 +17,7 @@ import org.irods.jargon.core.pub.io.IRODSFileFactory;
 import org.irods.jargon.core.pub.io.IRODSFileInputStream;
 import org.irods.jargon.core.pub.io.IRODSFileReader;
 
+import databook.config.IrodsConfig;
 import databook.persistence.rule.rdf.ruleset.DataEntity;
 import databook.persistence.rule.rdf.ruleset.DataObject;
 import databook.persistence.rule.rdf.ruleset.Message;
@@ -25,7 +26,7 @@ public class SimpleScheduler implements Scheduler {
 
 	public static final int NUM_THREADS = 2;
 
-	static Log log = LogFactory.getLog("Scheduler");
+	static Log log = LogFactory.getLog("Scheduler"); //$NON-NLS-1$
 	ExecutorService executor = Executors.newFixedThreadPool(NUM_THREADS);
 	IRODSFileSystem irodsFs;
 	IRODSAccount irodsAccount;
@@ -33,9 +34,9 @@ public class SimpleScheduler implements Scheduler {
 	public SimpleScheduler () {
 		try {
 			irodsFs = IRODSFileSystem.instance();
-			irodsAccount=IRODSAccount.instance("localhost", 1247, "rods", "rods", "/databook/home/rods","databook", "demoResc");
+			irodsAccount=IRODSAccount.instance(IrodsConfig.getString("irods.host"), 1247, IrodsConfig.getString("irods.user"), IrodsConfig.getString("irods.password"), IrodsConfig.getString("irods.home"),IrodsConfig.getString("irods.zone"), IrodsConfig.getString("irods.defaultResource")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
 		} catch (JargonException e) {
-			log.error("error", e);
+			log.error("error", e); //$NON-NLS-1$
 		}
 	}
 
@@ -46,10 +47,10 @@ public class SimpleScheduler implements Scheduler {
 			@Override
 			public void run() {
 				try {
-					System.out.println("run job " + j);
+					System.out.println("run job " + j); //$NON-NLS-1$
 					Message m = j.obj;
 					Collection<DataEntity> objs = m.getHasPart();
-					if (m.getOperation().equals("retrieve")) {
+					if (m.getOperation().equals("retrieve")) { //$NON-NLS-1$
 						for (DataEntity obj : objs) {
 							if (obj instanceof DataObject) {
 								String path = obj.getLabel();
@@ -66,17 +67,17 @@ public class SimpleScheduler implements Scheduler {
 									j.success.call(is);
 								} else {
 									throw new RuntimeException(
-											"No path provided for data object");
+											"No path provided for data object"); //$NON-NLS-1$
 
 								}
 							} else {
 								throw new RuntimeException(
-										"Unsupported data entity type "
+										"Unsupported data entity type " //$NON-NLS-1$
 												+ obj.getClass());
 
 							}
 						}
-					} else if (m.getOperation().equals("accessObject")) {
+					} else if (m.getOperation().equals("accessObject")) { //$NON-NLS-1$
 						for (DataEntity obj : objs) {
 							if (obj instanceof DataObject) {
 								String path = obj.getLabel();
@@ -86,12 +87,12 @@ public class SimpleScheduler implements Scheduler {
 									j.success.call(dao);
 								} else {
 									throw new RuntimeException(
-											"No path provided for data object");
+											"No path provided for data object"); //$NON-NLS-1$
 
 								}
 							} else {
 								throw new RuntimeException(
-										"Unsupported data entity type "
+										"Unsupported data entity type " //$NON-NLS-1$
 												+ obj.getClass());
 
 							}
@@ -99,7 +100,7 @@ public class SimpleScheduler implements Scheduler {
 						
 						
 					} else {
-						throw new RuntimeException("Unsupported operation "
+						throw new RuntimeException("Unsupported operation " //$NON-NLS-1$
 								+ m.getOperation());
 					}
 				} catch (Exception e) {
