@@ -1,6 +1,5 @@
 package databook.config;
 
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class IrodsConfig {
@@ -13,17 +12,9 @@ public class IrodsConfig {
 	}
 
 	public static String getString(String key) {
-		try {
 			return RESOURCE_BUNDLE.getString(key);
-		} catch (MissingResourceException e) {
-			return '!' + key + '!';
-		}
 	}
 	public static int getInt(String key) {
-		try {
 			return Integer.parseInt(RESOURCE_BUNDLE.getString(key)) ;
-		} catch (MissingResourceException e) {
-			return -1;
-		}
 	}
 }
