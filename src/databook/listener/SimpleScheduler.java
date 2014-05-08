@@ -34,7 +34,7 @@ public class SimpleScheduler implements Scheduler {
 	public SimpleScheduler () {
 		try {
 			irodsFs = IRODSFileSystem.instance();
-			irodsAccount=IRODSAccount.instance(IrodsConfig.getString("irods.host"), 1247, IrodsConfig.getString("irods.user"), IrodsConfig.getString("irods.password"), IrodsConfig.getString("irods.home"),IrodsConfig.getString("irods.zone"), IrodsConfig.getString("irods.defaultResource")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+			irodsAccount=IRODSAccount.instance(IrodsConfig.getString("irods.host"), IrodsConfig.getInt("irods.port"), IrodsConfig.getString("irods.user"), IrodsConfig.getString("irods.password"), IrodsConfig.getString("irods.home"),IrodsConfig.getString("irods.zone"), IrodsConfig.getString("irods.defaultResource")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
 		} catch (JargonException e) {
 			log.error("error", e); //$NON-NLS-1$
 		}

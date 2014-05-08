@@ -19,4 +19,11 @@ public class IrodsConfig {
 			return '!' + key + '!';
 		}
 	}
+	public static int getInt(String key) {
+		try {
+			return Integer.parseInt(RESOURCE_BUNDLE.getString(key)) ;
+		} catch (MissingResourceException e) {
+			return 0;
+		}
+	}
 }
