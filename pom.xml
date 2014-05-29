@@ -83,7 +83,7 @@
 		<dependency>
 			<groupId>org.irods.jargon</groupId>
 			<artifactId>jargon-core</artifactId>
-			<version>3.3.2-SNAPSHOT</version>
+			<version>3.3.6-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -123,7 +123,7 @@
 		<dependency>
 			<groupId>erilex</groupId>
 			<artifactId>erilex</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.osgi</groupId>
