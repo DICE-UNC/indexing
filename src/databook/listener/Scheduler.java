@@ -6,12 +6,16 @@ public interface Scheduler {
 	public interface Continuation<T> {
 		void call(T data);
 	}
+	public interface Credentials {
+		
+	}
 	
 	public class Job<T> {
 		Indexer requester;
 		Message obj;
 		Continuation<T> success;
 		Continuation<Throwable> fail;
+		Object cred;
 		public Job(Indexer requester, Message obj, Continuation<T> success,
 				Continuation<Throwable> fail) {
 			super();

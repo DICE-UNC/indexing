@@ -35,7 +35,8 @@ import databook.persistence.rule.rdf.ruleset.Message;
 
 public class SimpleScheduler implements Scheduler {
 
-	public static final int NUM_THREADS = 2;
+	public static final int NUM_THREADS = IrodsConfig.getInt("numThreads");
+	public static final boolean REQUIRE_CREDENTIALS = Boolean.parseBoolean(IrodsConfig.getString("requireCredentials"));
 
 	static Log log = LogFactory.getLog("Scheduler"); //$NON-NLS-1$
 	ExecutorService executor = Executors.newFixedThreadPool(NUM_THREADS);
@@ -53,7 +54,7 @@ public class SimpleScheduler implements Scheduler {
 		}
 	}
 
-	private String getPath(DataObject obj) {
+	private String getPath(DataObject obj, IRODSAccount iaccount) {
 
 		try {
 
@@ -64,7 +65,7 @@ public class SimpleScheduler implements Scheduler {
 			IRODSAccessObjectFactory accessObjectFactory;
 			accessObjectFactory = irodsFs.getIRODSAccessObjectFactory();
 			IRODSGenQueryExecutor irodsGenQueryExecutor = accessObjectFactory
-					.getIRODSGenQueryExecutor(irodsAccount);
+					.getIRODSGenQueryExecutor(iaccount);
 
 			IRODSGenQueryFromBuilder query = new IRODSGenQueryBuilder(false,
 					null)
@@ -101,10 +102,11 @@ public class SimpleScheduler implements Scheduler {
 					System.out.println("run job " + j); //$NON-NLS-1$
 					Message m = j.obj;
 					Collection<DataEntity> objs = m.getHasPart();
+					IRODSAccount iaccount = getIRODSAccount(j);
 					if (m.getOperation().equals("retrieve") || m.getOperation().equals("reader")) { //$NON-NLS-1$
 						for (DataEntity obj : objs) {
 							if (obj instanceof DataObject) {
-								String path = getPath((DataObject) obj);
+								String path = getPath((DataObject) obj, iaccount);
 								if (path != null) {
 									// org.irods.jargon.core.pub.DataObjectAO
 									// dao =
@@ -112,7 +114,7 @@ public class SimpleScheduler implements Scheduler {
 									// dao.replicateIrodsDataObject(path,
 									// "indexerResource");
 									IRODSFileFactory ff = irodsFs
-											.getIRODSFileFactory(irodsAccount);
+											.getIRODSFileFactory(iaccount);
 									IRODSFile f = ff.instanceIRODSFile(path);
 									IRODSFileReader is = new IRODSFileReader(f,
 											ff);
@@ -136,7 +138,7 @@ public class SimpleScheduler implements Scheduler {
 					} else if (m.getOperation().equals("inputStream")) { //$NON-NLS-1$
 						for (DataEntity obj : objs) {
 							if (obj instanceof DataObject) {
-								String path = getPath((DataObject) obj);
+								String path = getPath((DataObject) obj, iaccount);
 								if (path != null) {
 									// org.irods.jargon.core.pub.DataObjectAO
 									// dao =
@@ -144,7 +146,8 @@ public class SimpleScheduler implements Scheduler {
 									// dao.replicateIrodsDataObject(path,
 									// "indexerResource");
 									IRODSFileFactory ff = irodsFs
-											.getIRODSFileFactory(irodsAccount);
+											.getIRODSFileFactory(
+													iaccount);
 									IRODSFileInputStream is = ff
 											.instanceIRODSFileInputStream(path);
 
@@ -167,11 +170,11 @@ public class SimpleScheduler implements Scheduler {
 					} else if (m.getOperation().equals("accessObject")) { //$NON-NLS-1$
 						for (DataEntity obj : objs) {
 							if (obj instanceof DataObject) {
-								String path = getPath((DataObject) obj);
+								String path = getPath((DataObject) obj, iaccount);
 								if (path != null) {
 									org.irods.jargon.core.pub.DataObjectAO dao = irodsFs
 											.getIRODSAccessObjectFactory()
-											.getDataObjectAO(irodsAccount);
+											.getDataObjectAO(iaccount);
 
 									j.success.call(dao);
 								} else {
@@ -196,8 +199,23 @@ public class SimpleScheduler implements Scheduler {
 				}
 
 			}
+
+
 		});
 
 	}
-
+	
+	private IRODSAccount getIRODSAccount(final Job j) {
+		IRODSAccount iaccount;
+		if(REQUIRE_CREDENTIALS) {
+			iaccount = (IRODSAccount) j.cred;
+			if(iaccount == null) {
+				throw new java.lang.SecurityException("No credentials");
+			}
+		} else {
+			iaccount = irodsAccount;
+		}
+		return iaccount;
+	}
+	
 }
