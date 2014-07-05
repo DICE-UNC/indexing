@@ -13,7 +13,7 @@ import databook.persistence.rule.PersistenceContext;
 import databook.persistence.rule.rdf.ruleset.RDFEntity;
 
 public class RDFAbstractPropertyRule<T extends RDFEntity, D>
-		implements ObjectPropertyRule<T, D> {
+		implements ObjectPropertyRule<T, D, PersistenceContext> {
 
 	public boolean cascade;
 	public StringObjectMapping<D> som;

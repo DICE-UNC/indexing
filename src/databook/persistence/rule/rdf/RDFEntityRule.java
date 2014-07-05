@@ -16,7 +16,7 @@ import databook.persistence.rule.EntityRule;
 import databook.persistence.rule.PersistenceContext;
 import databook.persistence.rule.rdf.ruleset.RDFEntity;
 
-public class RDFEntityRule<T extends RDFEntity> implements EntityRule<T> {
+public class RDFEntityRule<T extends RDFEntity> implements EntityRule<T, PersistenceContext> {
 // utilities
 	public static void createAllProperties(RDFEntity e, PersistenceContext context) {
 		try {

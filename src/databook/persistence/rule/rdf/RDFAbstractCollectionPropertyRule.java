@@ -16,7 +16,7 @@ import databook.persistence.rule.PersistenceContext;
 import databook.persistence.rule.rdf.ruleset.RDFEntity;
 import erilex.data.generic.Pair;
 
-public class RDFAbstractCollectionPropertyRule<T extends RDFEntity, D> implements ObjectPropertyRule<T, Collection<D>> {
+public class RDFAbstractCollectionPropertyRule<T extends RDFEntity, D> implements ObjectPropertyRule<T, Collection<D>, PersistenceContext> {
 	
 	protected StringObjectMapping<D> som;
 	public RDFAbstractCollectionPropertyRule(StringObjectMapping<D> som, boolean cascadeP) {
