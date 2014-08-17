@@ -19,7 +19,9 @@ public interface PolymorphicDataEntityMixin {
 		    @Type(value = Messages.class, name = "Messages"),
 		    @Type(value = User.class, name = "User"),
 		    @Type(value = Access.class, name = "Access"),
-		    @Type(value = Session.class, name = "Session")})  
+		    @Type(value = Session.class, name = "Session"),
+		    @Type(value = Post.class, name = "Post")})
+			
 	java.util.List<DataEntity> getHasPart();
 	
 	@JsonProperty("partOf")
@@ -34,7 +36,8 @@ public interface PolymorphicDataEntityMixin {
 		    @Type(value = Messages.class, name = "Messages"),
 		    @Type(value = User.class, name = "User"),
 		    @Type(value = Access.class, name = "Access"),
-		    @Type(value = Session.class, name = "Session")})  
+		    @Type(value = Session.class, name = "Session"),
+		    @Type(value = Post.class, name = "Post")})  
 	java.util.List<DataEntity> getPartOf();
 	
 }
