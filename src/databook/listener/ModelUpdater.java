@@ -14,8 +14,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import databook.listener.service.IndexingService;
 import databook.listener.service.MessagingService;
+import databook.persistence.rule.PolymorphicDataEntityLinkMixin;
 import databook.persistence.rule.PolymorphicDataEntityMixin;
 import databook.persistence.rule.rdf.ruleset.DataEntity;
+import databook.persistence.rule.rdf.ruleset.DataEntityLink;
 import databook.persistence.rule.rdf.ruleset.Message;
 import databook.persistence.rule.rdf.ruleset.Messages;
 
@@ -57,7 +59,9 @@ public class ModelUpdater implements MessagingService, IndexingService {
 		ObjectMapper om = new ObjectMapper();
 		om.addMixInAnnotations(DataEntity.class,
 				PolymorphicDataEntityMixin.class);
+		
 		om.addMixInAnnotations(Message.class, PolymorphicDataEntityMixin.class);
+		om.addMixInAnnotations(DataEntityLink.class, PolymorphicDataEntityLinkMixin.class);
 
 		Messages ms;
 		try {
