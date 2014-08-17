@@ -92,6 +92,40 @@ public class SimpleScheduler implements Scheduler {
 		return null;
 	}
 
+	private String getPath(databook.persistence.rule.rdf.ruleset.Collection obj, IRODSAccount iaccount) {
+
+		try {
+
+			URI uri = obj.getUri();
+			if (uri == null) {
+				return obj.getLabel();
+			}
+			IRODSAccessObjectFactory accessObjectFactory;
+			accessObjectFactory = irodsFs.getIRODSAccessObjectFactory();
+			IRODSGenQueryExecutor irodsGenQueryExecutor = accessObjectFactory
+					.getIRODSGenQueryExecutor(iaccount);
+
+			IRODSGenQueryFromBuilder query = new IRODSGenQueryBuilder(false,
+					null)
+					.addSelectAsGenQueryValue(RodsGenQueryEnum.COL_COLL_NAME)
+					.addConditionAsGenQueryField(
+							RodsGenQueryEnum.COL_META_DATA_ATTR_NAME,
+							QueryConditionOperators.EQUAL, "data:id")
+					.addConditionAsGenQueryField(
+							RodsGenQueryEnum.COL_META_DATA_ATTR_VALUE,
+							QueryConditionOperators.EQUAL, uri.toString())
+					.exportIRODSQueryFromBuilder(1);
+
+			IRODSQueryResultSetInterface resultSet = irodsGenQueryExecutor
+					.executeIRODSQuery(query, 0);
+			IRODSQueryResultRow result = resultSet.getFirstResult();
+
+			return result.getColumn(RodsGenQueryEnum.COL_COLL_NAME.getName());
+		} catch (Exception e) {
+			log.error("error", e);
+		}
+		return null;
+	}
 	@Override
 	public void submit(final Job j) {
 		executor.execute(new Runnable() {
@@ -182,6 +216,19 @@ public class SimpleScheduler implements Scheduler {
 											"No path provided for data object"); //$NON-NLS-1$
 
 								}
+							} else if (obj instanceof databook.persistence.rule.rdf.ruleset.Collection) {
+									String path = getPath((databook.persistence.rule.rdf.ruleset.Collection) obj, iaccount);
+									if (path != null) {
+										org.irods.jargon.core.pub.CollectionAO dao = irodsFs
+												.getIRODSAccessObjectFactory()
+												.getCollectionAO(iaccount);
+
+										j.success.call(dao);
+									} else {
+										throw new RuntimeException(
+												"No path provided for data object"); //$NON-NLS-1$
+
+									}
 							} else {
 								throw new RuntimeException(
 										"Unsupported data entity type " //$NON-NLS-1$

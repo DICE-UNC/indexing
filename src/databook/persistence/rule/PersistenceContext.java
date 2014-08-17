@@ -124,10 +124,10 @@ public class PersistenceContext {
 				  		.match(ModelUtils.UNIT_URI).with(avu.getUnit())
 				        .uri().end().run());
 				
-				if(list.isEmpty()) {
+				if(list.size() != 2) {
 					return null;
 				} else {
-					return new URI( list.get(0)[0]);
+					return new URI( list.get(1)[0]);
 				}
 			} catch (URISyntaxException e) {
 				log.error("error", e);
@@ -142,7 +142,8 @@ public class PersistenceContext {
 		t = som.query(t);
 		List<String[]> l = (List<String[]>) t.end().run(); 
 		List<D> lo = new ArrayList<D>();
-		for(String[] uritypeuri : l) {
+		for(int n = 1;n<l.size();n++) {
+			String[] uritypeuri = l.get(n);
 			D i = som.sparqlQueryResultStringToObject(uritypeuri);
 			lo.add(i);
 		}
