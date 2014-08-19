@@ -22,19 +22,16 @@ import databook.persistence.rule.rdf.ruleset.Message;
 import databook.persistence.rule.rdf.ruleset.Messages;
 
 public class ModelUpdater implements MessagingService, IndexingService {
-	// private final ModelUpdateListener modelUpdateListener;
 
-	static final Log log = LogFactory.getLog(ModelUpdater.class);
+	private static final Log log = LogFactory.getLog(ModelUpdater.class);
 	private List<Indexer> indexers = new ArrayList<Indexer>();
 	private Scheduler s = new SimpleScheduler();
 
-	public ModelUpdater() {
-	}
-
 	public void regIndexer(Indexer i) {
-		if (!indexers.contains(i))
+		if (!indexers.contains(i)) {
 			indexers.add(i);
-		i.setScheduler(s );
+		}
+		i.setScheduler(s);
 	}
 
 	public void unregIndexer(Indexer i) {
@@ -42,24 +39,15 @@ public class ModelUpdater implements MessagingService, IndexingService {
 		indexers.remove(i);
 	}
 
-	public static String genAVUId(String objId, String attribute, String value,
-			String unit) {
-		return URLEncoder.encode(objId + "/" + attribute + "/" + value + "/"
-				+ unit);
+	public static String genAVUId(String objId, String attribute, String value, String unit) {
+		return URLEncoder.encode(objId + "/" + attribute + "/" + value + "/" + unit);
 	}
 
-	/*
-	 * message format: first line command:
-	 * 
-	 * add del move addMeta delMeta modMeta
-	 */
-	public void update(String messages) throws Exception {
-		log.info("Executing update:\n===start===\n" + messages
-				+ "\n===end===\n");
+	public void update(String messages) {
+		log.info("Executing update:\n===start===\n" + messages + "\n===end===\n");
+
 		ObjectMapper om = new ObjectMapper();
-		om.addMixInAnnotations(DataEntity.class,
-				PolymorphicDataEntityMixin.class);
-		
+		om.addMixInAnnotations(DataEntity.class,PolymorphicDataEntityMixin.class);
 		om.addMixInAnnotations(Message.class, PolymorphicDataEntityMixin.class);
 		om.addMixInAnnotations(DataEntityLink.class, PolymorphicDataEntityLinkMixin.class);
 
@@ -78,22 +66,21 @@ public class ModelUpdater implements MessagingService, IndexingService {
 		}
 
 		for (Indexer i : indexers) {
-			i.messages(ms);
+			try {
+				i.messages(ms);
+				log.info("Model updated ( id = " + i + ")");
+			} catch (Throwable e) {
+				log.error("error", e);
+			}
 		}
 
 	}
 
 	@Override
 	public void handle(String message) {
-		System.out.println("Executing update:\n===start===\n" + message
-				+ "\n===end===\n");
+		System.out.println("Executing update:\n===start===\n" + message + "\n===end===\n");
 		log.info("Received AMQP message'" + message + "'");
-		try {
-			update(message);
-			log.info("Model updated");
-		} catch (Exception e) {
-			log.error(e.getLocalizedMessage());
-		}
+		update(message);
 
 	}
 }
