@@ -16,7 +16,11 @@ import databook.persistence.rule.PersistenceContext;
 import databook.persistence.rule.rdf.ruleset.RDFEntity;
 import erilex.data.generic.Pair;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 public class RDFAbstractCollectionPropertyRule<T extends RDFEntity, D> implements ObjectPropertyRule<T, Collection<D>, PersistenceContext> {
+	private static final Log log = LogFactory.getLog(RDFAbstractCollectionPropertyRule.class);
 	
 	protected StringObjectMapping<D> som;
 	public RDFAbstractCollectionPropertyRule(StringObjectMapping<D> som, boolean cascadeP) {
@@ -32,6 +36,7 @@ public class RDFAbstractCollectionPropertyRule<T extends RDFEntity, D> implement
 			for(D o: c) {
 			if(o != null) {
 				if(cascade) {
+					log.info("***creating object " + o);
 					context.create(o);
 				}
 				URI uri = e.getUri();
