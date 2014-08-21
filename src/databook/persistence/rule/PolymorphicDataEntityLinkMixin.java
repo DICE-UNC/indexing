@@ -7,7 +7,7 @@ import databook.persistence.rule.rdf.ruleset.*;
 import static databook.utils.ModelUtils.*;
 	  
 public interface PolymorphicDataEntityLinkMixin {
-	@JsonProperty("hasPart")
+	@JsonProperty("dataEntity")
 	@JsonTypeInfo(  
 		    use = JsonTypeInfo.Id.NAME,  
 		    include = JsonTypeInfo.As.PROPERTY,  

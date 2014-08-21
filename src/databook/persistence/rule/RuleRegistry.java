@@ -30,12 +30,12 @@ public class RuleRegistry {
 		entityRuleMap = new HashMap<Class, EntityRule>();
 	}
 	
-	public void registerRule(Class c, EntityRule r) {
+	public <T> void registerRule(Class<T> c, EntityRule<T, ?> r) {
 		entityRuleMap.put(c, r);
 		
 	}
 	
-	public void registerRule(Class c, String prop, Class c1, ObjectPropertyRule r) {
+	public <T,T1> void registerRule(Class<T> c, String prop, Class<T1> c1, ObjectPropertyRule<T,T1,?> r) {
 		objectPropertyMap.get(c).get(prop).put(c1, r);
 		
 	}

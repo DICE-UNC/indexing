@@ -9,7 +9,7 @@
     },
     "properties": {
     	"user": {
-    		"$ref": "DataEntity.json"
+    		"$ref": "User.json"
     	},
     	"userRole": {
     		"type": "string"
