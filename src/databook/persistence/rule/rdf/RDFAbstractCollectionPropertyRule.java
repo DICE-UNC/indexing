@@ -1,6 +1,6 @@
 package databook.persistence.rule.rdf;
 
-import static databook.utils.ModelUtils.*;
+import static databook.utils.ModelUtils.DATABOOK_MODEL_URI;
 import static databook.utils.ModelUtils.bracket;
 import static databook.utils.ModelUtils.databookResource;
 import static databook.utils.ModelUtils.databookStatement;
@@ -9,15 +9,15 @@ import static databook.utils.ModelUtils.sDiff;
 import java.net.URI;
 import java.util.Collection;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import databook.local.model.RDFDatabase.Format;
 import databook.local.model.RDFDatabase.RDFDatabaseTransaction;
 import databook.persistence.rule.ObjectPropertyRule;
 import databook.persistence.rule.PersistenceContext;
 import databook.persistence.rule.rdf.ruleset.RDFEntity;
 import erilex.data.generic.Pair;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 public class RDFAbstractCollectionPropertyRule<T extends RDFEntity, D> implements ObjectPropertyRule<T, Collection<D>, PersistenceContext> {
 	private static final Log log = LogFactory.getLog(RDFAbstractCollectionPropertyRule.class);
