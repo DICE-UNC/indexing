@@ -16,14 +16,21 @@ import databook.persistence.rule.EntityRule;
 import databook.persistence.rule.PersistenceContext;
 import databook.persistence.rule.rdf.ruleset.RDFEntity;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 public class RDFEntityRule<T extends RDFEntity> implements EntityRule<T, PersistenceContext> {
+	private static final Log log = LogFactory.getLog(RDFEntityRule.class);
+
 // utilities
 	public static void createAllProperties(RDFEntity e, PersistenceContext context) {
 		try {
+			log.info("***creating object " + e);
 			BeanInfo info = Introspector.getBeanInfo(e.getClass());
 			for(PropertyDescriptor pd : info.getPropertyDescriptors()) {
 				String prop = pd.getName();
 				Object o = pd.getReadMethod().invoke(e);
+				log.info("***creating property " + prop + " = " + o);
 				context.create(e, prop, o);
 
 			}

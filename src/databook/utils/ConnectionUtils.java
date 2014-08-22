@@ -6,11 +6,11 @@ import org.irods.jargon.core.pub.IRODSFileSystem;
 
 public class ConnectionUtils {
 	public static final String VIVO_ADMIN_IRODS_USERNAME = "rods";
-	public static final String VIVO_ADMIN_IRODS_PASSWORD = "rods";
+	public static final String VIVO_ADMIN_IRODS_PASSWORD = "renci!a7";
 	public static final String VIVO_ADMIN_IRODS_HOST = "localhost";
 	public static final int VIVO_ADMIN_IRODS_PORT = 1247;
-	public static final String VIVO_ADMIN_IRODS_HOME_DIRECTORY = "/databook/home/rods";
-	public static final String VIVO_ADMIN_IRODS_ZONE = "databook";
+	public static final String VIVO_ADMIN_IRODS_HOME_DIRECTORY = "/dfc2/home/rods";
+	public static final String VIVO_ADMIN_IRODS_ZONE = "dfc2";
 	public static final String VIVO_ADMIN_IRODS_DEFAULT_RESOURCE = "demoResc";
 	public static IRODSFileSystem irodsFs;
 
