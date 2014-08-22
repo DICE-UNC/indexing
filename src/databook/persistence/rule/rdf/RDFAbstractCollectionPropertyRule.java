@@ -36,7 +36,7 @@ public class RDFAbstractCollectionPropertyRule<T extends RDFEntity, D> implement
 			for(D o: c) {
 			if(o != null) {
 				if(cascade) {
-					log.info("***creating object " + o);
+					// log.info("***creating object " + o);
 					context.create(o);
 				}
 				URI uri = e.getUri();
