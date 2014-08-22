@@ -25,12 +25,12 @@ public class RDFEntityRule<T extends RDFEntity> implements EntityRule<T, Persist
 // utilities
 	public static void createAllProperties(RDFEntity e, PersistenceContext context) {
 		try {
-			log.info("***creating object " + e);
+			// log.info("***creating object " + e);
 			BeanInfo info = Introspector.getBeanInfo(e.getClass());
 			for(PropertyDescriptor pd : info.getPropertyDescriptors()) {
 				String prop = pd.getName();
 				Object o = pd.getReadMethod().invoke(e);
-				log.info("***creating property " + prop + " = " + o);
+				// log.info("***creating property " + prop + " = " + o);
 				context.create(e, prop, o);
 
 			}
