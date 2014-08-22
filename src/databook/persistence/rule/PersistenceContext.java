@@ -121,9 +121,9 @@ public class PersistenceContext {
 			try {
 				List<String[]> list = ((List<String[]>) getRdfDb().selectQuery()
 						.node(d.getUri()).follow(ModelUtils.METADATA_URI)
-						.match(ModelUtils.ATTRIBUTE_URI).with(avu.getAttribute())
-				  		.match(ModelUtils.VALUE_URI).with(avu.getValue())
-				  		.match(ModelUtils.UNIT_URI).with(avu.getUnit())
+						.match(ModelUtils.ATTRIBUTE_URI).with(ModelUtils.databookString(avu.getAttribute()))
+				  		.match(ModelUtils.VALUE_URI).with(ModelUtils.databookString(avu.getValue()))
+				  		.match(ModelUtils.UNIT_URI).with(ModelUtils.databookString(avu.getUnit()))
 				        .uri().end().run());
 				
 				if(list.size() != 2) {
