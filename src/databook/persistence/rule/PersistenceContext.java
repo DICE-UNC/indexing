@@ -55,8 +55,8 @@ public class PersistenceContext {
 	
 	public void create(RDFEntity e, String prop, Object o) {
 		ObjectPropertyRule r = getRuleRegistry().lookupRule(e, prop, o);
-		log.info("&&&context create property: "+e.getClass()+"."+prop+"="+ (o==null?"null":o.getClass()));
-		log.info("&&&rule: "+r);
+		//log.info("&&&context create property: "+e.getClass()+"."+prop+"="+ (o==null?"null":o.getClass()));
+		//log.info("&&&rule: "+r);
 		if(r!=null) {
 		r.create(e, prop, o, this);
 		}
