@@ -3,6 +3,18 @@ Indexing Framework
 
 An indexing framework for iRODS based middleware
 
+Quickstart
+--------
+
+1. Install Fabric  
+``sudo apt-get install fabric``
+2. Download install script 
+``wget https://raw.githubusercontent.com/DICE-UNC/indexing-irods/master/fabfile.py``
+3. Install it 
+``fab install``
+4. Start using 
+``fab start_all_services``
+
 Overview
 --------
 The indexing framework comes in an OSGI bundle that provides two services
